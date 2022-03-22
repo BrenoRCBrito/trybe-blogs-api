@@ -10,7 +10,6 @@ module.exports = async (req, _res, next) => {
   try {
     const { data } = jwt.verify(token, process.env.JWT_SECRET);
     req.user = data;
-    console.log(data);
     return next();
   } catch (error) {
     const expiredTokenError = { status: 401, message: 'Expired or invalid token' };
