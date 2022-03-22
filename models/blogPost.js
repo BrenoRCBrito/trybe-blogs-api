@@ -26,7 +26,9 @@ module.exports = (sequelize, _DataTypes) => {
   const BlogPost = sequelize.define(
     'BlogPost',
     blogPostsAtributes,
-    { tableName: 'BlogPosts', timestamps: false },
+    { tableName: 'BlogPosts',
+    createdAt: 'published',
+    updatedAt: 'updated' },
   );
 
   BlogPost.associate = (models) => {

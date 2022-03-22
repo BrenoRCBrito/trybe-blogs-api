@@ -37,4 +37,37 @@ const loginEmail = (emailStr) => {
   return true;
 };
 
-module.exports = { displayName, email, password, loginPassword, loginEmail };
+const content = (contentStr) => {
+  if (typeof contentStr !== 'string') {
+    const noContentError = { status: 400, message: '"content" is required' };
+    throw noContentError;
+  }
+  return true;
+};
+
+const title = (titleStr) => {
+  if (typeof titleStr !== 'string') {
+    const noTitleError = { status: 400, message: '"title" is required' };
+    throw noTitleError;
+  }
+  return true;
+};
+
+const categoryId = (categoryIdArr) => {
+    console.log(categoryIdArr);
+  if (!Array.isArray(categoryIdArr)) {
+    const noCategoryIdError = { status: 400, message: '"categoryIds" is required' };
+    throw noCategoryIdError;
+  }
+  return true;
+};
+
+module.exports = { 
+displayName,
+email,
+password,
+loginPassword,
+loginEmail,
+content,
+title,
+categoryId };
