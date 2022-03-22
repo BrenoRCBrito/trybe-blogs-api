@@ -21,4 +21,20 @@ const password = (passwd) => {
   return true;
 };
 
-module.exports = { displayName, email, password };
+const loginPassword = (passwd) => {
+  const lengthError = { status: 400, message: '"password" is not allowed to be empty' };
+  const noPasswdError = { status: 400, message: '"password" is required' };
+  if (typeof passwd !== 'string') throw noPasswdError;
+  if (passwd === '') throw lengthError;
+  return true;
+};
+
+const loginEmail = (emailStr) => {
+  const invalidationError = { status: 400, message: '"email" is not allowed to be empty' };
+  const noEmailError = { status: 400, message: '"email" is required' };
+  if (typeof emailStr !== 'string') throw noEmailError;
+  if (emailStr === '') throw invalidationError;
+  return true;
+};
+
+module.exports = { displayName, email, password, loginPassword, loginEmail };
