@@ -40,4 +40,14 @@ const edit = async (req, res, next) => {
   }
 };
 
-module.exports = { create, get: { all, byId }, edit };
+const destroy = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await blogPostsService.destroy(id, req.user.email);
+    res.status(204).send();
+  } catch (e) {
+    next(e);
+  }
+};
+
+module.exports = { create, get: { all, byId }, edit, destroy };

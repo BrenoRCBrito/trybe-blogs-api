@@ -61,4 +61,18 @@ const edit = async (id, { title, content, categoryIds }, userEmail) => {
   return updatedPost;
 };
 
-module.exports = { create, get: { all, byId }, edit };
+const destroy = async (id, userEmail) => {
+  const [user] = await User.findAll({ where: { email: userEmail } });
+  const post = await BlogPost.findByPk(id);
+  if (!post) {
+    const noPostError = { status: 404, message: 'Post does not exist' };
+    throw noPostError;
+  }
+  if (user.id !== post.userId) {
+    const unauthorizedUserError = { status: 401, message: 'Unauthorized user' };
+    throw unauthorizedUserError;
+  }
+  await BlogPost.destroy({ where: { id } });
+};
+
+module.exports = { create, get: { all, byId }, edit, destroy };

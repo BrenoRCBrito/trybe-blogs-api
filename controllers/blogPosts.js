@@ -10,4 +10,6 @@ router.get('/:id', authMiddleware, blogPostsMiddleware.get.byId);
 
 router.put('/:id', authMiddleware, blogPostsMiddleware.edit);
 
+router.delete('/:id', authMiddleware, blogPostsMiddleware.destroy);
+
 module.exports = router;
