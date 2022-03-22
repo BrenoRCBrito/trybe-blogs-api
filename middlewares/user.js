@@ -18,4 +18,14 @@ const all = async (_req, res, next) => {
   }
 };
 
-module.exports = { create, get: { all } };
+const byId = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await userService.get.byId(Number(id));
+    return res.status(200).json(user);
+  } catch (e) {
+    next(e);
+  }
+};
+
+module.exports = { create, get: { all, byId } };

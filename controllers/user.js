@@ -6,4 +6,6 @@ router.post('', userMiddlewares.create);
 
 router.get('', authMiddleware, userMiddlewares.get.all);
 
+router.get('/:id', authMiddleware, userMiddlewares.get.byId);
+
 module.exports = router;
