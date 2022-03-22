@@ -1,6 +1,7 @@
 const express = require('express');
 const userController = require('./controllers/user');
 const loginController = require('./controllers/login');
+const categoriesController = require('./controllers/categories');
 require('dotenv').config();
 const notFound = require('./middlewares/notFound');
 const error = require('./middlewares/error');
@@ -19,6 +20,8 @@ app.get('/', (_request, response) => {
 app.use('/user', userController);
 
 app.use('/login', loginController);
+
+app.use('/categories', categoriesController);
 
 app.use('*', notFound);
 
