@@ -19,6 +19,16 @@ const all = async (_req, res, next) => {
   }
 };
 
+const byId = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const post = await blogPostsService.get.byId(id);
+    res.status(200).json(post);
+  } catch (e) {
+    next(e);
+  }
+};
+
 const edit = async (req, res, next) => {
   const { id } = req.params;
   try {
@@ -30,4 +40,4 @@ const edit = async (req, res, next) => {
   }
 };
 
-module.exports = { create, get: { all }, edit };
+module.exports = { create, get: { all, byId }, edit };

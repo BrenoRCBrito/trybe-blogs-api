@@ -26,6 +26,20 @@ const all = async () => BlogPost.findAll({
   ],
 });
 
+const byId = async (id) => {
+  const post = await BlogPost.findByPk(id, {
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  if (!post) {
+    const noPostError = { status: 404, message: 'Post does not exist' };
+    throw noPostError;
+  }
+  return post;
+};
+
 const edit = async (id, { title, content, categoryIds }, userEmail) => {
   validate.content(content);
   validate.title(title);
@@ -47,4 +61,4 @@ const edit = async (id, { title, content, categoryIds }, userEmail) => {
   return updatedPost;
 };
 
-module.exports = { create, get: { all }, edit };
+module.exports = { create, get: { all, byId }, edit };
