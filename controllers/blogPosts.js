@@ -4,4 +4,8 @@ const authMiddleware = require('../middlewares/auth');
 
 router.post('', authMiddleware, blogPostsMiddleware.create);
 
+router.get('', authMiddleware, blogPostsMiddleware.get.all);
+
+router.put('/:id', authMiddleware, blogPostsMiddleware.edit);
+
 module.exports = router;

@@ -19,4 +19,29 @@ const create = async ({ content, title, categoryIds }, userEmail) => {
   return post;
 };
 
-module.exports = { create };
+const all = async () => BlogPost.findAll({
+  include: [
+    { model: User, as: 'user', attributes: { exclude: ['password'] } },
+    { model: Category, as: 'categories', through: { attributes: [] } },
+  ],
+});
+
+const edit = async (id, { title, content, categoryIds }, userEmail) => {
+  validate.content(content);
+  validate.title(title);
+  if (categoryIds) {
+    const categoryError = { status: 400, message: 'Categories cannot be edited' };
+    throw categoryError;
+  }
+  const [user] = await User.findAll({ where: { email: userEmail } });
+  const post = await BlogPost.findByPk(id);
+  if (user.id !== post.userId) {
+    const unauthorizedUserError = { status: 401, message: 'Unauthorized user' };
+    throw unauthorizedUserError;
+  }
+  await BlogPost.update({ title, content }, { where: { id } });
+  const updatedPost = await BlogPost.findByPk(id);
+  return updatedPost;
+};
+
+module.exports = { create, get: { all }, edit };
