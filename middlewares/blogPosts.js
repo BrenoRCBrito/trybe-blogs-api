@@ -50,4 +50,14 @@ const destroy = async (req, res, next) => {
   }
 };
 
-module.exports = { create, get: { all, byId }, edit, destroy };
+const search = async (req, res, next) => {
+  const { q: searchTerm } = req.query;
+  try {
+    const posts = await blogPostsService.search(searchTerm);
+    return res.status(200).json(posts);
+  } catch (e) {
+    next(e);
+  }
+};
+
+module.exports = { create, get: { all, byId }, edit, destroy, search };

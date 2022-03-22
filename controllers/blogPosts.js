@@ -6,6 +6,8 @@ router.post('', authMiddleware, blogPostsMiddleware.create);
 
 router.get('', authMiddleware, blogPostsMiddleware.get.all);
 
+router.get('/search', authMiddleware, blogPostsMiddleware.search);
+
 router.get('/:id', authMiddleware, blogPostsMiddleware.get.byId);
 
 router.put('/:id', authMiddleware, blogPostsMiddleware.edit);
