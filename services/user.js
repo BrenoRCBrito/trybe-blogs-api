@@ -25,4 +25,10 @@ const byId = async (id) => {
   return user;
 };
 
-module.exports = { create, get: { all, byId } };
+const destroy = async (userEmail) => {
+  const [user] = await User.findAll({ where: { email: userEmail } });
+  const { id } = user;
+  await User.destroy({ where: { id } });
+};
+
+module.exports = { create, get: { all, byId }, destroy };

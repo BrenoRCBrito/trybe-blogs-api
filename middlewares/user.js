@@ -28,4 +28,13 @@ const byId = async (req, res, next) => {
   }
 };
 
-module.exports = { create, get: { all, byId } };
+const destroy = async (req, res, next) => {
+  try {
+    await userService.destroy(req.user.email);
+    res.status(204).send();
+  } catch (e) {
+    next(e);
+  }
+};
+
+module.exports = { create, get: { all, byId }, destroy };
